@@ -41,7 +41,7 @@ class RemainingSignalsAfterReloadWidget(ScriptedLoadableModuleWidget):
 
   def onReload(self):
     # TODO: removing the comment # from the following line solves the problem
-    # self.widget.delete()
+    self.widget.delete()
     ScriptedLoadableModuleWidget.onReload(self)
 
   def setup(self):
@@ -81,7 +81,8 @@ class CustomTextEdit(qt.QTextEdit):
 
   def onAboutToBeDestroyed(self, obj):
     print "on destroyed"
-    self.layoutManager.layoutChanged.disconnect(self.onLayoutChanged)
+    if self.layoutManager:
+      self.layoutManager.layoutChanged.disconnect(self.onLayoutChanged)
 
   def onLayoutChanged(self):
     CustomTextEdit.slotCallCount += 1
